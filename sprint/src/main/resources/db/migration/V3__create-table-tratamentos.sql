@@ -1,0 +1,6 @@
+CREATE TABLE Tratamentos (
+    id_tratamento BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    custo VARCHAR(255) NOT NULL
+);
