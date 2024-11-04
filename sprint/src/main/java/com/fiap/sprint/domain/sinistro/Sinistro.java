@@ -37,7 +37,7 @@ public class Sinistro {
 
 
 
-    public Sinistro(Paciente paciente, Tratamento tratamento, DTOSinistro dados) {
+    public Sinistro(Paciente paciente, Tratamento tratamento, SinistroDTO dados) {
         this.paciente = paciente;
         this.tratamento = tratamento;
         this.descricao = dados.descricao();
@@ -47,7 +47,7 @@ public class Sinistro {
         this.ativo = true;
     }
 
-    public void atualizarInformacoes(DTOAttSinistro dados) {
+    public void atualizarInformacoes(AttSinistroDTO dados) {
         if (dados.descricao() != null) {
             this.descricao = dados.descricao();
         }

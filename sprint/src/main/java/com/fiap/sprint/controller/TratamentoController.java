@@ -19,46 +19,36 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class TratamentoController {
 
     @Autowired
-    private TratamentoRepository repository;
+    private TratamentoService tratamentoService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<DTOTratamento> Cadastrar(@RequestBody @Valid DTOTratamento dados, UriComponentsBuilder uriComponentsBuilder) {
-        var tratamento = new Tratamento(dados);
-        repository.save(tratamento);
+    public ResponseEntity<TratamentoDTO> cadastrar(@RequestBody @Valid TratamentoDTO dados, UriComponentsBuilder uriComponentsBuilder) {
+        var tratamento = tratamentoService.cadastrar(dados);
         var uri = uriComponentsBuilder.path("/tratamentos/{id}").buildAndExpand(tratamento.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DTOTratamento(tratamento));
+        return ResponseEntity.created(uri).body(new TratamentoDTO(tratamento));
     }
 
-
     @GetMapping
-    public ResponseEntity<Page<DTOListaTratamento>> Listar(@PageableDefault(size = 10, sort = {"tipo"}) Pageable paginacao) {
-        var page = repository.findAllByAtivoTrue(paginacao).map(DTOListaTratamento::new);
+    public ResponseEntity<Page<ListaTratamentoDTO>> listar(@PageableDefault(size = 10, sort = {"tipo"}) Pageable paginacao) {
+        var page = tratamentoService.listar(paginacao).map(ListaTratamentoDTO::new);
         return ResponseEntity.ok(page);
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<DTOListaTratamento> Atualizar(@RequestBody @Valid DTOAttTratamento dados) {
-        var tratamento = repository.findById(dados.id())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tratamento não encontrado"));
-        tratamento.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new DTOListaTratamento(tratamento));
+    public ResponseEntity<ListaTratamentoDTO> atualizar(@RequestBody @Valid AttTratamentoDTO dados) {
+        var tratamento = tratamentoService.atualizar(dados);
+        return ResponseEntity.ok(new ListaTratamentoDTO(tratamento));
     }
 
-    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> Excluir(@PathVariable Long id) {
-        var tratamento = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tratamento não encontrado"));
-        tratamento.excluir();
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        tratamentoService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTOListaTratamento> Detalhar(@PathVariable Long id) {
-        var tratamento = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tratamento não encontrado"));
-        return ResponseEntity.ok(new DTOListaTratamento(tratamento));
+    public ResponseEntity<ListaTratamentoDTO> detalhar(@PathVariable Long id) {
+        var tratamento = tratamentoService.detalhar(id);
+        return ResponseEntity.ok(new ListaTratamentoDTO(tratamento));
     }
 }

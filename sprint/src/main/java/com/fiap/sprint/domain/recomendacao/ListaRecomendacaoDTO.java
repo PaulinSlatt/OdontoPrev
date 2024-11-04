@@ -2,14 +2,14 @@ package com.fiap.sprint.domain.recomendacao;
 
 import java.time.LocalDate;
 
-public record DTOListaRecomendacao(
+public record ListaRecomendacaoDTO(
         Long id,
         Long pacienteId,
         Long tratamentoId,
         LocalDate data_recomendacao,
         String motivo) {
 
-    public DTOListaRecomendacao(Recomendacao recomendacao) {
+    public ListaRecomendacaoDTO(Recomendacao recomendacao) {
         this(
                 recomendacao.getId(),
                 recomendacao.getPaciente() != null ? recomendacao.getPaciente().getId() : null,

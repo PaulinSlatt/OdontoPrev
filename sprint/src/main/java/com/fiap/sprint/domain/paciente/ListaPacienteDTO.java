@@ -1,8 +1,8 @@
 package com.fiap.sprint.domain.paciente;
 
-public record DTOListaPaciente(Long id, String nome, String email) {
+public record ListaPacienteDTO(Long id, String nome, String email) {
 
-    public DTOListaPaciente(Paciente paciente) {
+    public ListaPacienteDTO(Paciente paciente) {
         this(paciente.getId(), paciente.getNome(), paciente.getEmail());
     }
 

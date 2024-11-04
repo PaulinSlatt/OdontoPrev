@@ -32,7 +32,7 @@ public class Tratamento {
 
 
 
-    public Tratamento(DTOTratamento dados) {
+    public Tratamento(TratamentoDTO dados) {
 
         this.descricao = dados.descricao();
         this.custo = dados.custo();
@@ -44,7 +44,7 @@ public class Tratamento {
     }
 
 
-    public void atualizarInformacoes(DTOAttTratamento dados) {
+    public void atualizarInformacoes(AttTratamentoDTO dados) {
         if (dados.descricao() != null) {
             this.descricao = dados.descricao();
         }

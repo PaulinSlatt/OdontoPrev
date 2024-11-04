@@ -2,7 +2,7 @@ package com.fiap.sprint.domain.sinistro;
 
 import java.time.LocalDate;
 
-public record DTOListaSinistro(
+public record ListaSinistroDTO(
         Long id,
         String descricao,
         String status,
@@ -11,7 +11,7 @@ public record DTOListaSinistro(
         LocalDate data_ocorrencia,
         String reembolso) {
 
-    public DTOListaSinistro(Sinistro sinistro) {
+    public ListaSinistroDTO(Sinistro sinistro) {
         this(
                 sinistro.getId(),
                 sinistro.getDescricao(),

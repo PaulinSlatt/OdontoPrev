@@ -36,7 +36,7 @@ public class Paciente {
 
     private Boolean ativo;
 
-    public Paciente(DTOCadastroPaciente dados) {
+    public Paciente(CadastroPacienteDTO dados) {
         this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
@@ -49,8 +49,7 @@ public class Paciente {
     public Paciente(Long aLong) {
     }
 
-
-    public void AtualizarInformacoes(DTOAttPaciente dados) {
+    public void atualizarInformacoes(AttPacienteDTO dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }
@@ -63,12 +62,9 @@ public class Paciente {
         if (dados.endereco() != null) {
             this.endereco.atualizarInformacoes(dados.endereco());
         }
-
     }
 
-    public void Excluir() {
-
+    public void excluir() {
         this.ativo = false;
     }
-
 }

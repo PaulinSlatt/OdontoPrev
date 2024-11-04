@@ -1,8 +1,8 @@
 package com.fiap.sprint.domain.tratamento;
 
-public record DTOListaTratamento(Long id, String descricao, String custo, Tipo tipo) {
+public record ListaTratamentoDTO(Long id, String descricao, String custo, Tipo tipo) {
 
-    public DTOListaTratamento(Tratamento tratamento) {
+    public ListaTratamentoDTO(Tratamento tratamento) {
         this(tratamento.getId(), tratamento.getDescricao(), tratamento.getCusto(), tratamento.getTipo());
     }
 

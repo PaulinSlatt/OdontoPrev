@@ -37,7 +37,7 @@ public class HistoricoTratamento {
 
 
 
-    public HistoricoTratamento(Paciente paciente, Tratamento tratamento, DTOHistorico dados) {
+    public HistoricoTratamento(Paciente paciente, Tratamento tratamento, HistoricoDTO dados) {
         this.paciente = paciente;
         this.tratamento = tratamento;
         this.data_tratamento = getData_tratamento();
@@ -45,7 +45,7 @@ public class HistoricoTratamento {
         this.ativo = true;
     }
 
-    public void atualizarInformacoes(DTOAttHistorico dados) {
+    public void atualizarInformacoes(AttHistoricoDTO dados) {
         if (dados.observacao() != null) {
             this.observacao = dados.observacao();
         }

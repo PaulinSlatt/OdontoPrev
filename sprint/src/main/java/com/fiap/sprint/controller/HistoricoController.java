@@ -3,7 +3,6 @@ package com.fiap.sprint.controller;
 import com.fiap.sprint.domain.historicoTratamento.*;
 import com.fiap.sprint.domain.paciente.Paciente;
 import com.fiap.sprint.domain.paciente.PacienteRepository;
-import com.fiap.sprint.domain.recomendacao.*;
 import com.fiap.sprint.domain.tratamento.Tratamento;
 import com.fiap.sprint.domain.tratamento.TratamentoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,63 +25,36 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class HistoricoController {
 
     @Autowired
-    private HistoricoTratamentoRepository repository;
-
-    @Autowired
-    private PacienteRepository pacienteRepository;
-
-    @Autowired
-    private TratamentoRepository tratamentoRepository;
-
+    private HistoricoService historicoService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<DTOHistorico> Cadastrar(@RequestBody @Valid DTOHistorico dados, UriComponentsBuilder uriComponentsBuilder) {
-
-        Paciente paciente = pacienteRepository.findById(dados.pacienteId())
-                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
-
-        Tratamento tratamento = tratamentoRepository.findById(dados.tratamentoId())
-                .orElseThrow(() -> new EntityNotFoundException("Tratamento não encontrado"));
-
-        var historico = new HistoricoTratamento(paciente, tratamento, dados);
-
-        repository.save(historico);
-
+    public ResponseEntity<HistoricoDTO> cadastrar(@RequestBody @Valid HistoricoDTO dados, UriComponentsBuilder uriComponentsBuilder) {
+        var historico = historicoService.cadastrar(dados);
         var uri = uriComponentsBuilder.path("/historico/{id}").buildAndExpand(historico.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DTOHistorico(historico));
+        return ResponseEntity.created(uri).body(new HistoricoDTO(historico));
     }
 
-
     @GetMapping
-    public ResponseEntity<Page<DTOListaHistorico>> Listar(@PageableDefault(size = 10, sort = {"observacao"}) Pageable paginacao) {
-        var page = repository.findAllByAtivoTrue(paginacao).map(DTOListaHistorico::new);
+    public ResponseEntity<Page<ListaHistoricoDTO>> listar(@PageableDefault(size = 10, sort = {"observacao"}) Pageable paginacao) {
+        var page = historicoService.listar(paginacao).map(ListaHistoricoDTO::new);
         return ResponseEntity.ok(page);
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<DTOListaHistorico> Atualizar(@RequestBody @Valid DTOAttHistorico dados) {
-        var historico = repository.findById(dados.id())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Historico não encontrado"));
-        historico.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new DTOListaHistorico(historico));
+    public ResponseEntity<ListaHistoricoDTO> atualizar(@RequestBody @Valid AttHistoricoDTO dados) {
+        var historico = historicoService.atualizar(dados);
+        return ResponseEntity.ok(new ListaHistoricoDTO(historico));
     }
 
-    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> Excluir(@PathVariable Long id) {
-        var historico = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Historico não encontrado"));
-        historico.excluir();
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        historicoService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTOListaHistorico> Detalhar(@PathVariable Long id) {
-        var historico = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Historico não encontrado"));
-        return ResponseEntity.ok(new DTOListaHistorico(historico));
+    public ResponseEntity<ListaHistoricoDTO> detalhar(@PathVariable Long id) {
+        var historico = historicoService.detalhar(id);
+        return ResponseEntity.ok(new ListaHistoricoDTO(historico));
     }
 }

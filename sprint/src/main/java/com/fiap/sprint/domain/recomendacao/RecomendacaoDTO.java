@@ -7,10 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 //cLASSE PARA TRANSFERENCIA DE DADOS
-public record DTORecomendacao(@NotNull Long pacienteId, @NotNull Long tratamentoId, @NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd") LocalDate data_recomendacao, @NotBlank String motivo){
+public record RecomendacaoDTO(@NotNull Long pacienteId, @NotNull Long tratamentoId, @NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd") LocalDate data_recomendacao, @NotBlank String motivo){
 
 
-    public DTORecomendacao(Recomendacao recomendacao) {
+    public RecomendacaoDTO(Recomendacao recomendacao) {
         this(
                 recomendacao.getPaciente() != null ? recomendacao.getPaciente().getId() : null,
                 recomendacao.getTratamento() != null ? recomendacao.getTratamento().getId() : null,

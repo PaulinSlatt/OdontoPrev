@@ -19,7 +19,7 @@ public class TratadorDeErros {
     }
 
 
-    @ExceptionHandler(MethodArgumentNotValidException.class) 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity TratarErro400(MethodArgumentNotValidException ex){
         var erros = ex.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());

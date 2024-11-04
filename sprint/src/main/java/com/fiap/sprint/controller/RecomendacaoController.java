@@ -25,63 +25,36 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class RecomendacaoController {
 
     @Autowired
-    private RecomendacaoRepository repository;
-
-    @Autowired
-    private PacienteRepository pacienteRepository;
-
-    @Autowired
-    private TratamentoRepository tratamentoRepository;
-
+    private RecomendacaoService recomendacaoService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<DTORecomendacao> Cadastrar(@RequestBody @Valid DTORecomendacao dados, UriComponentsBuilder uriComponentsBuilder) {
-
-        Paciente paciente = pacienteRepository.findById(dados.pacienteId())
-                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
-
-        Tratamento tratamento = tratamentoRepository.findById(dados.tratamentoId())
-                .orElseThrow(() -> new EntityNotFoundException("Tratamento não encontrado"));
-
-        var recomendacao = new Recomendacao(paciente, tratamento, dados);
-
-        repository.save(recomendacao);
-
+    public ResponseEntity<RecomendacaoDTO> cadastrar(@RequestBody @Valid RecomendacaoDTO dados, UriComponentsBuilder uriComponentsBuilder) {
+        var recomendacao = recomendacaoService.cadastrar(dados);
         var uri = uriComponentsBuilder.path("/recomendacao/{id}").buildAndExpand(recomendacao.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DTORecomendacao(recomendacao));
+        return ResponseEntity.created(uri).body(new RecomendacaoDTO(recomendacao));
     }
 
-
     @GetMapping
-    public ResponseEntity<Page<DTOListaRecomendacao>> Listar(@PageableDefault(size = 10, sort = {"motivo"}) Pageable paginacao) {
-        var page = repository.findAllByAtivoTrue(paginacao).map(DTOListaRecomendacao::new);
+    public ResponseEntity<Page<ListaRecomendacaoDTO>> listar(@PageableDefault(size = 10, sort = {"motivo"}) Pageable paginacao) {
+        var page = recomendacaoService.listar(paginacao).map(ListaRecomendacaoDTO::new);
         return ResponseEntity.ok(page);
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<DTOListaRecomendacao> Atualizar(@RequestBody @Valid DTOAttRecomendacao dados) {
-        var recomendacao = repository.findById(dados.id())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recomendacao não encontrado"));
-        recomendacao.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new DTOListaRecomendacao(recomendacao));
+    public ResponseEntity<ListaRecomendacaoDTO> atualizar(@RequestBody @Valid AttRecomendacaoDTO dados) {
+        var recomendacao = recomendacaoService.atualizar(dados);
+        return ResponseEntity.ok(new ListaRecomendacaoDTO(recomendacao));
     }
 
-    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> Excluir(@PathVariable Long id) {
-        var recomendacao = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recomendacao não encontrado"));
-        recomendacao.excluir();
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        recomendacaoService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTOListaRecomendacao> Detalhar(@PathVariable Long id) {
-        var recomendacao = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recomendacao não encontrado"));
-        return ResponseEntity.ok(new DTOListaRecomendacao(recomendacao));
+    public ResponseEntity<ListaRecomendacaoDTO> detalhar(@PathVariable Long id) {
+        var recomendacao = recomendacaoService.detalhar(id);
+        return ResponseEntity.ok(new ListaRecomendacaoDTO(recomendacao));
     }
 }

@@ -2,14 +2,14 @@ package com.fiap.sprint.domain.historicoTratamento;
 
 import java.time.LocalDate;
 
-public record DTOListaHistorico(
+public record ListaHistoricoDTO(
         Long id,
         Long pacienteId,
         Long tratamentoId,
         LocalDate data_tratamento,
         String motivo) {
 
-    public DTOListaHistorico(HistoricoTratamento historico) {
+    public ListaHistoricoDTO(HistoricoTratamento historico) {
         this(
                 historico.getId(),
                 historico.getPaciente() != null ? historico.getPaciente().getId() : null,

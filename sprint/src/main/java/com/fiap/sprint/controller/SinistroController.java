@@ -23,63 +23,36 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SinistroController {
 
     @Autowired
-    private SinistroRepository repository;
-
-    @Autowired
-    private PacienteRepository pacienteRepository;
-
-    @Autowired
-    private TratamentoRepository tratamentoRepository;
-
+    private SinistroService sinistroService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<DTOSinistro> Cadastrar(@RequestBody @Valid DTOSinistro dados, UriComponentsBuilder uriComponentsBuilder) {
-
-        Paciente paciente = pacienteRepository.findById(dados.pacienteId())
-                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
-
-        Tratamento tratamento = tratamentoRepository.findById(dados.tratamentoId())
-                .orElseThrow(() -> new EntityNotFoundException("Tratamento não encontrado"));
-
-        var sinistro = new Sinistro(paciente, tratamento, dados);
-
-        repository.save(sinistro);
-
+    public ResponseEntity<SinistroDTO> cadastrar(@RequestBody @Valid SinistroDTO dados, UriComponentsBuilder uriComponentsBuilder) {
+        var sinistro = sinistroService.cadastrar(dados);
         var uri = uriComponentsBuilder.path("/sinistros/{id}").buildAndExpand(sinistro.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DTOSinistro(sinistro));
+        return ResponseEntity.created(uri).body(new SinistroDTO(sinistro));
     }
 
-
     @GetMapping
-    public ResponseEntity<Page<DTOListaSinistro>> Listar(@PageableDefault(size = 10, sort = {"status"}) Pageable paginacao) {
-        var page = repository.findAllByAtivoTrue(paginacao).map(DTOListaSinistro::new);
+    public ResponseEntity<Page<ListaSinistroDTO>> listar(@PageableDefault(size = 10, sort = {"status"}) Pageable paginacao) {
+        var page = sinistroService.listar(paginacao).map(ListaSinistroDTO::new);
         return ResponseEntity.ok(page);
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<DTOListaSinistro> Atualizar(@RequestBody @Valid DTOAttSinistro dados) {
-        var sinistro = repository.findById(dados.id())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));
-        sinistro.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new DTOListaSinistro(sinistro));
+    public ResponseEntity<ListaSinistroDTO> atualizar(@RequestBody @Valid AttSinistroDTO dados) {
+        var sinistro = sinistroService.atualizar(dados);
+        return ResponseEntity.ok(new ListaSinistroDTO(sinistro));
     }
 
-    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> Excluir(@PathVariable Long id) {
-        var sinistro = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));
-        sinistro.excluir();
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        sinistroService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTOListaSinistro> Detalhar(@PathVariable Long id) {
-        var sinistro = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));
-        return ResponseEntity.ok(new DTOListaSinistro(sinistro));
+    public ResponseEntity<ListaSinistroDTO> detalhar(@PathVariable Long id) {
+        var sinistro = sinistroService.detalhar(id);
+        return ResponseEntity.ok(new ListaSinistroDTO(sinistro));
     }
 }

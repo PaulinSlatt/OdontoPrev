@@ -36,7 +36,7 @@ public class Recomendacao {
 
 
 
-    public Recomendacao(Paciente paciente, Tratamento tratamento, DTORecomendacao dados) {
+    public Recomendacao(Paciente paciente, Tratamento tratamento, RecomendacaoDTO dados) {
         this.paciente = paciente;
         this.tratamento = tratamento;
         this.data_recomendacao = getData_recomendacao();
@@ -44,7 +44,7 @@ public class Recomendacao {
         this.ativo = true;
     }
 
-    public void atualizarInformacoes(DTOAttRecomendacao dados) {
+    public void atualizarInformacoes(AttRecomendacaoDTO dados) {
         if (dados.motivo() != null) {
             this.motivo = dados.motivo();
         }

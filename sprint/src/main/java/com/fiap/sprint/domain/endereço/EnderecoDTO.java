@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 //cLASSE PARA TRANSFERENCIA DE DADOS
-public record DTOEndereco(@NotBlank
+public record EnderecoDTO(@NotBlank
                           String logradouro,
                           @NotBlank
                           String bairro,
