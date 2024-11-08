@@ -10,5 +10,9 @@
         <module name="sprint.sprint.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sprint.sprint.main~1" target="17" />
+      <module name="sprint.sprint.test~1" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

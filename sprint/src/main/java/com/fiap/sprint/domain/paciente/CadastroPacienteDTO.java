@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 
-public record CadastroPacienteDTO(@NotBlank String nome, @NotBlank @Email String email, @NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd") LocalDate data_nascimento, Genero genero , @NotBlank String telefone, @NotNull @Valid EnderecoDTO endereco) {
+public record CadastroPacienteDTO(@NotBlank String nome, @NotBlank @Email String email, @NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd") LocalDate data_nascimento, Genero genero , @NotBlank String telefone, @NotNull @Valid EnderecoDTO endereco)  {
 
 
 
