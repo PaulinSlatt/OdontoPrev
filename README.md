@@ -1,9 +1,9 @@
 # Nome da aplicação: Sistema de Recomendação para Tratamentos Preventivos
  
 ## Integrantes do Grupo
- 
-*Giovanna Lima Giantomaso* - Estudante na unidade Paulista, responsável pelo código fonte.  
-*Paulo Sergio Caetano Moreno Mafra* - Estudante na unidade Aclimação, responsável pelo código fonte.  
+
+*Paulo Sergio Caetano Moreno Mafra* - Estudante na unidade Aclimação, responsável pelo código fonte.
+*Giovanna Lima Giantomaso* - Estudante na unidade Paulista, responsável pelo banco de dados.    
 *Rebeca Silva Lopes* - Estudante na unidade Paulista, responsável pela documentação do projeto.
  
 ## Requisitos do Software
