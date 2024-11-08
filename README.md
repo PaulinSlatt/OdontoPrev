@@ -23,6 +23,10 @@
  
 [Proposta Tecnológica](https://youtu.be/O7DQT36o9Ck?si=cFJRVk0jR93B9SF7)
  
+## Link para Documentação Swagger
+ 
+A documentação Swagger da API está disponível em: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+ 
 ## Listagem de Endpoints
  
 ### Recursos disponíveis
