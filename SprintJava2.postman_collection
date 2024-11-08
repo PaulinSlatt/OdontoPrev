@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"nome\": \"paulo Caetano\",\n\"email\": \"paulo.caetano@gmail.com\",\n\"data_nascimento\": \"2001/12/11\",\n\"genero\": \"MASCULINO\",\n\"telefone\": \"1238347512\",\n\"endereco\": {\n    \"logradouro\": \"rua 1\",\n    \"bairro\": \"bairro\",\n\t\t\"cep\": \"12565678\",\n    \"cidade\": \"Brasilia\",\n    \"uf\": \"DF\",\n    \"numero\": \"1\",\n    \"complemento\": \"complemento\"\n    }\n}",
+					"raw": "{\n\"nome\": \"paulo Caetano\",\n\"email\": \"caetano@gmail.com\",\n\"data_nascimento\": \"2001/12/11\",\n\"genero\": \"MASCULINO\",\n\"telefone\": \"1238347512\",\n\"endereco\": {\n    \"logradouro\": \"rua 1\",\n    \"bairro\": \"bairro\",\n\t\t\"cep\": \"12565678\",\n    \"cidade\": \"Brasilia\",\n    \"uf\": \"DF\",\n    \"numero\": \"1\",\n    \"complemento\": \"complemento\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -139,14 +139,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/alunos",
+					"raw": "http://localhost:8080/pacientes",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"alunos"
+						"pacientes"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -185,7 +185,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"nome\": \"Novo Nome\",\n  \"email\": \"novo.email@exemplo.com\"\n}",
+					"raw": "{\n    \"id\": \"12\",\n  \"nome\": \"Novo Nome\",\n  \"email\": \"novo.email@exemplo.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,15 +193,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/alunos/6",
+					"raw": "http://localhost:8080/pacientes",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"alunos",
-						"6"
+						"pacientes"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -214,13 +213,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {",
 							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
 							"});",
 							""
-						]
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -237,18 +237,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/info?id=1",
+					"raw": "http://localhost:8080/pacientes/12",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "8080",
 					"path": [
-						"info"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"pacientes",
+						"12"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -287,7 +284,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"nome\": \"Jade Maria canhete\",\n\"email\": \"jadoca.canhete@gmail.com\"\n\n}",
+					"raw": "{\n  \"descricao\": \"canal emergencial\",\n  \"custo\": \"350.00\",\n  \"tipo\": \"CANAL\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -295,14 +292,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/responsavel",
+					"raw": "http://localhost:8080/tratamentos",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"responsavel"
+						"tratamentos"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -315,12 +312,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});"
-						]
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -328,18 +326,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/info?id=1",
+					"raw": "http://localhost:8080/tratamentos",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "8080",
 					"path": [
-						"info"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"tratamentos"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -399,13 +393,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {",
 							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
 							"});",
 							""
-						]
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -422,18 +417,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/info?id=1",
+					"raw": "http://localhost:8080/tratamentos/1",
+					"protocol": "http",
 					"host": [
-						"{{base_url}}"
+						"localhost"
 					],
+					"port": "8080",
 					"path": [
-						"info"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"tratamentos",
+						"1"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -472,7 +464,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"nome\": \"alana\",    \n\"login\": \"alana.canhete@gmail.com\",\n\"senha\": \"123456\"\n\n}",
+					"raw": "{\n  \"pacienteId\": 12,\n  \"tratamentoId\": 3,\n  \"descricao\": \"Descrição do sinistro\",\n  \"data_ocorrido\": \"2023/12/01\",\n  \"reembolso\": \"Sim\",\n  \"status\": \"Aprovado\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -480,14 +472,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin",
+					"raw": "http://localhost:8080/sinistros",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin"
+						"sinistros"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -512,26 +504,19 @@
 			],
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJUaXBvVXN1YXJpbyI6IkFETUlOIiwic3ViIjoiYWxhbmEuY2FuaGV0ZUBnbWFpbC5jb20iLCJpc3MiOiJDYUVudHJlTm9zIiwiZXhwIjozMzAyNDYwNDY1fQ.DNM5pvCKVa0ZbmfbeLBbUJT3rp8ZRiuuns9U8Rb1xDo",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/admin",
+					"raw": "http://localhost:8080/sinistros",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin"
+						"sinistros"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -570,7 +555,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"nome\": \"Novo Nome\",\n  \"email\": \"novo.email@exemplo.com\"\n}",
+					"raw": "{\n  \"id\": 6,\n  \"descricao\": \"Nova descrição do sinistro\",\n  \"reembolso\": \"Sim\",\n  \"status\": \"Aprovado\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -578,15 +563,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/alunos/6",
+					"raw": "http://localhost:8080/sinistros",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"alunos",
-						"6"
+						"sinistros"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -633,15 +617,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/1",
+					"raw": "http://localhost:8080/sinistros/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin",
-						"1"
+						"sinistros",
+						"6"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -680,7 +664,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"descricao\": \"O aluno está enfrentando dificuldades\",\n  \"status\": \"pendente\",\n  \"tipo\": \"PROBLEMAS_ACADEMICOS\"\n}",
+					"raw": "{\n  \"pacienteId\": 12,\n  \"tratamentoId\": 3,\n  \"data_recomendacao\": \"2023/12/01\",\n  \"motivo\": \"Motivo da recomendação\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -688,14 +672,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/relatos",
+					"raw": "http://localhost:8080/recomendacao",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"relatos"
+						"recomendacao"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -732,14 +716,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/relatos",
+					"raw": "http://localhost:8080/recomendacao",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"relatos"
+						"recomendacao"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -778,7 +762,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"nome\": \"Novo Nome\",\n  \"email\": \"novo.email@exemplo.com\"\n}",
+					"raw": "{\n  \"id\": 1,\n  \"motivo\": \"Novo motivo para a recomendação\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -786,15 +770,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/alunos/6",
+					"raw": "http://localhost:8080/recomendacao",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"alunos",
-						"6"
+						"recomendacao"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -841,14 +824,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/1",
+					"raw": "http://localhost:8080/recomendacao/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin",
+						"recomendacao",
 						"1"
 					]
 				},
@@ -888,7 +871,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"descricao\": \"O aluno está enfrentando dificuldades\",\n  \"status\": \"pendente\",\n  \"tipo\": \"PROBLEMAS_ACADEMICOS\"\n}",
+					"raw": "{\n  \"pacienteId\": 12,\n  \"tratamentoId\": 3,\n  \"data_tratamento\": \"2023/12/01\",\n  \"observacao\": \"Observação sobre o tratamento\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -896,14 +879,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/relatos",
+					"raw": "http://localhost:8080/historico",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"relatos"
+						"historico"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -940,14 +923,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/relatos",
+					"raw": "http://localhost:8080/historico",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"relatos"
+						"historico"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -986,7 +969,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"nome\": \"Novo Nome\",\n  \"email\": \"novo.email@exemplo.com\"\n}",
+					"raw": "{\n  \"id\": 1,\n  \"observacao\": \"Nova observação sobre o tratamento\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -994,15 +977,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/alunos/6",
+					"raw": "http://localhost:8080/historico",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"alunos",
-						"6"
+						"historico"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -1049,14 +1031,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/1",
+					"raw": "http://localhost:8080/historico/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin",
+						"historico",
 						"1"
 					]
 				},
